@@ -106,6 +106,8 @@ def download_xwalk_windows(branch, version, use_wget = False):
     else:
         branch_name = branch
 
+    if branch_name.startswith('beta'):
+	    branch_name = 'beta'
     cts_dir = config.XWALK_BINARY_WINDOWS_DIRS.get(branch)
     if not cts_dir:
         sys.stderr.write('Check config.py, have you set the XWALK_BINARY_WINDOWS_DIRS correctly?')
