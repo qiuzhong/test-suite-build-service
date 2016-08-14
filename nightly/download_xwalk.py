@@ -12,13 +12,13 @@ import config
 
 def download_file(url, filename, use_wget = False):
     if not use_wget:
-        print('downloading {url}'.format(url = url))
+        print('\ndownloading {url}'.format(url = url))
         conn = requests.get(url, verify = False)
         if conn.status_code == 200:
             with open(filename, 'wb') as fp:
                 fp.write(conn.content)
         else:
-            print('Failed to request {url}'.format(url = url))
+            print('\nFailed to request {url}'.format(url = url))
     else:
         os.system('wget --no-proxy --no-check-certificate {url}'.format(url = url))
 
@@ -70,7 +70,7 @@ def download_xwalk_android(branch, version, use_wget = False):
         for arch_zip in config.ANDROID_ARCH_ZIP:
             arch_zip_name = arch_zip.format(version = version, arch = arch)
             if os.path.exists(os.path.join(arch_dir, arch_zip_name)):
-                print('{zip} already exists!'.format(zip = arch_zip_name))
+                print('\n{zip} already exists!'.format(zip = arch_zip_name))
                 continue
 
             arch_zip_url = urllib.parse.urljoin(config.URL_PREFIX,
@@ -83,7 +83,7 @@ def download_xwalk_android(branch, version, use_wget = False):
     for xwalk_zip in config.ANDROID_ZIP:
         xwalk_zip_name = xwalk_zip.format(version = version)
         if os.path.exists(os.path.join(version_dir, xwalk_zip_name)):
-            print('{zip} already exists!'.format(zip = xwalk_zip_name))
+            print('\n{zip} already exists!'.format(zip = xwalk_zip_name))
             continue
 
         xwalk_zip_url = urllib.parse.urljoin(config.URL_PREFIX,
@@ -117,14 +117,14 @@ def download_xwalk_windows(branch, version, use_wget = False):
     for xwalk_zip in config.WINDOWS_ZIP:
         xwalk_zip_name = xwalk_zip.format(version = version)
         if os.path.exists(os.path.join(tools_dir, xwalk_zip_name)):
-            print('{zip} already exists!'.format(zip = xwalk_zip_name))
+            print('\n{zip} already exists!'.format(zip = xwalk_zip_name))
             continue
 
         xwalk_zip_url = urllib.parse.urljoin(config.URL_PREFIX,
                                                 '/'.join(['crosswalk', 'windows', branch_name, version,
                                                         xwalk_zip_name])
                                                 )
-        download_file(xwalk_zip_url, xwalk_zip_name)        
+        download_file(xwalk_zip_url, xwalk_zip_name)
 
 
 
@@ -145,16 +145,10 @@ def download_xwalk_linux(version, branch = 'canary', use_wget = False):
     for xwalk_deb in config.LINUX_DEB:
         xwalk_deb_name = xwalk_deb.format(version = version)
         if os.path.exists(os.path.join(version_dir, xwalk_deb_name)):
-            print('{deb} already exists!'.format(deb = xwalk_deb_name))
+            print('\n{deb} already exists!'.format(deb = xwalk_deb_name))
             continue
         xwalk_deb_url = urllib.parse.urljoin(config.URL_PREFIX,
                                                 '/'.join(['crosswalk', 'linux', 'deb', branch, version,
                                                         xwalk_deb_name])
                                             )
         download_file(xwalk_deb_url, xwalk_deb_name, use_wget)
-
-
-
-if __name__ == '__main__':
-    # download_xwalk_android('canary', '22.52.557.0')
-    download_xwalk_linux('22.52.557.0')

@@ -39,7 +39,7 @@ ANDROID_ZIP = (
 )
 
 WINDOWS_ZIP = (
-    "crosswalk64-{version}.zip"
+    "crosswalk64-{version}.zip",
 )
 
 LINUX_DEB = (
