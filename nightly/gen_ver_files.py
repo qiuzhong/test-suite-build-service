@@ -11,9 +11,9 @@ version_file_names = [
 
 pwd = os.getcwd()
 
-def gen_version_files():
+def gen_version_files(overwrite = False):
 	for version_file in version_file_names:
-		if not os.path.exists(os.path.join(pwd, version_file)):
+		if not os.path.exists(os.path.join(pwd, version_file)) or overwrite:
 			with open(version_file, 'w') as fp:
 				fp.write('0.0.0.0')
 		
