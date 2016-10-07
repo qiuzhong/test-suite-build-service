@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 
+import os
+import sys
 import json
 import smtplib
 from email.mime.text import MIMEText    
 from email.mime.multipart import MIMEMultipart
+
+import config
+import download_xwalk
 
 
 def mail_xwalk_detect_results(smtp_server, fromaddr, toaddrs, platform, branch, json_file, cc = ""):
@@ -16,7 +21,7 @@ def mail_xwalk_detect_results(smtp_server, fromaddr, toaddrs, platform, branch, 
     if not update_info.get('update'):
         print('No update, will not mail to the administrator.')
         return
-
+    
     msg = MIMEMultipart()
     msg['Subject'] = 'Crosswal Release Notification!'
     msg['From'] = fromaddr
@@ -42,6 +47,9 @@ def mail_xwalk_detect_results(smtp_server, fromaddr, toaddrs, platform, branch, 
     server.sendmail(fromaddr, toaddrs, msg.as_string().encode('utf-8'))
     server.quit()
 
+    if platform == 'Windows':
+        download_xwalk.download_xwalk_windows(branch, update_info.get('new_ver'), unzip = True)
+
 
 if __name__ == '__main__':
     server = 'smtp.intel.com'
@@ -49,5 +57,12 @@ if __name__ == '__main__':
     toaddrs = 'zhongx.qiu@intel.com'
     platform = sys.argv[1]
     branch = sys.argv[2]
-    json_file = sys.argv[3]
+    if platform == 'Windows':
+        json_file = config.XWALK_WINDOWS_UPDATE_JSON_FILE.get(branch)
+    elif platform == 'Android':
+        json_file = config.XWALK_ANDROID_UPDATE_JSON_FILE.get(branch)
+    else:
+        sys.stderr.write('Wrong platform!\n')
+        sys.exit(1)
+
     mail_xwalk_detect_results(server, fromaddr, toaddrs, platform, branch, json_file)

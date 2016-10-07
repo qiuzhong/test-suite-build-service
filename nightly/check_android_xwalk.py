@@ -10,7 +10,9 @@ def check(branch):
         check_xwalk.check_if_has_new_xwalk_for_android_canary()
     elif branch == 'beta21':
         check_xwalk.check_if_has_new_xwalk_for_android_beta21()
-    elif:
+    elif branch == 'beta22':
+        check_xwalk.check_if_has_new_xwalk_for_android_beta22()		
+    else:
         sys.stderr.write('Not supported branch for Android')
         sys.exit(1)
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+# -* coding: utf8 *-
 
 import os
 import sys
@@ -93,7 +93,7 @@ def download_xwalk_android(branch, version, use_wget = False):
         download_file(xwalk_zip_url, xwalk_zip_name, use_wget)
 
 
-def download_xwalk_windows(branch, version, use_wget = False):
+def download_xwalk_windows(branch, version, unzip = False, use_wget = False):
     '''
     Donwload the Crosswalk binary for Android from URL
     https://linux-ftp.sh.intel.com/pub/mirrors/01org/crosswalk/releases/crosswalk/windows/<BRANCH>/<VERSION>
@@ -127,7 +127,10 @@ def download_xwalk_windows(branch, version, use_wget = False):
                                                         xwalk_zip_name])
                                                 )
         download_file(xwalk_zip_url, xwalk_zip_name)
-
+        if unzip:
+            cmd = config.unzip_cmd + " x " + os.path.join(tools_dir, xwalk_zip_name) + " -o{tools_dir}".format(tools_dir = tools_dir)
+            print(cmd)
+            os.system(cmd)
 
 
 def download_xwalk_linux(version, branch = 'canary', use_wget = False):
@@ -136,8 +139,8 @@ def download_xwalk_linux(version, branch = 'canary', use_wget = False):
     https://linux-ftp.sh.intel.com/pub/mirrors/01org/crosswalk/releases/crosswalk/linux/deb/canary/<VERSION>
     Content:
         <VERSION>/
-        crosswalk_22.52.557.0-1_amd64.deb
-        crosswalk_22.52.557.0-1_i386.deb
+        crosswalk_<VERSION>-1_amd64.deb
+        crosswalk_<VERSION>-1_i386.deb
     '''
     version_dir = os.path.join(config.XWALK_BINARY_LINUX_ROOT_DIRS, branch, version)
     if not os.path.exists(version_dir):

@@ -91,12 +91,12 @@ class TestDownloadXWalk(unittest.TestCase):
             if os.path.exists(config.XWALK_BINARY_LINUX_ROOT_DIRS):
                 shutil.rmtree(config.XWALK_BINARY_LINUX_ROOT_DIRS)
         elif sys.platform.startswith('win'):
-            if os.path.exists(os.path.join(config.XWALK_BINARY_WINDOWS_DIRS.get('canary'), 
+            if os.path.exists(os.path.join(config.XWALK_BINARY_WINDOWS_DIRS.get('canary'), 'tools',
                                         'crosswalk64-{version}.zip'.format(
                                         version = latest_ver.LatestWindowsVersion.get('canary')))):
                 print('dummy: removing crosswalk64-{version}.zip'.format(
                                         version = latest_ver.LatestWindowsVersion.get('canary')))
-            if os.path.exists(os.path.join(config.XWALK_BINARY_WINDOWS_DIRS.get('beta21'), 
+            if os.path.exists(os.path.join(config.XWALK_BINARY_WINDOWS_DIRS.get('beta21'), 'tools',
                                         'crosswalk64-{version}.zip'.format(
                                         version = latest_ver.LatestWindowsVersion.get('beta')))):
                 print('dummy: removing crosswalk64-{version}.zip'.format(

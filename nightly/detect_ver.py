@@ -73,7 +73,7 @@ def detect_latest_windows(branch):
         branch_name = 'canary'
     else:
         branch_name = branch
-
+    
     latest_url = urllib.parse.urljoin(config.URL_PREFIX,
                                     '/'.join(['crosswalk', 'windows', 
                                             branch_name, 'latest']
@@ -111,11 +111,22 @@ def detect_latest_linux():
 
 
 if __name__ == '__main__':
+    print("Android:")
     latest_android_ver = detect_latest_android('master')
     print(latest_android_ver)
+    latest_android_ver = detect_latest_android('beta')
+    print(latest_android_ver)
+    latest_android_ver = detect_latest_android('stable')
+    print(latest_android_ver)
 
+    print("\n\nWindows:")
     latest_windows_ver = detect_latest_windows('master')
     print(latest_windows_ver)
+    latest_windows_ver = detect_latest_windows('beta')
+    print(latest_windows_ver)
+    latest_windows_ver = detect_latest_windows('stable')
+    print(latest_windows_ver)        
 
+    print("\n\nLinux:")
     latest_canary_ver = detect_latest_linux()
     print(latest_canary_ver)
